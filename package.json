@@ -1,7 +1,7 @@
 {
-  "name": "identifier-tracker-extension",
+  "name": "login-count-tracker-extension",
   "version": "1.0.0",
-  "description": "Browser extension to track and highlight identifiers using configurable regexes.",
+  "description": "Browser extension that records visits to the Microsoft login page.",
   "scripts": {
     "dev": "vite",
     "build": "vite build"

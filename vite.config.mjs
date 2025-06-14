@@ -9,7 +9,6 @@ export default defineConfig({
         background: resolve(__dirname, "src/background.js"),
         "content-script": resolve(__dirname, "src/content-script.js"),
         "popup/popup": resolve(__dirname, "popup/popup.html"),
-        "options/options": resolve(__dirname, "options/options.html"),
       },
       output: {
         entryFileNames: "[name].js",
@@ -25,7 +24,6 @@ export default defineConfig({
       targets: [
         { src: "manifest.json", dest: "." },
         { src: "icons", dest: "." },
-        { src: "src/styles.css", dest: "." },
       ],
     }),
   ],

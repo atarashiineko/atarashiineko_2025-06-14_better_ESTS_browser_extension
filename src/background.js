@@ -1,36 +1,25 @@
-// background.js (service worker)
-import { IdentifierRepository } from "./repository.js";
+import Dexie from "dexie";
 
-const repo = new IdentifierRepository();
+const db = new Dexie("LoginCounterDB");
+db.version(1).stores({ counters: "&key" });
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.action === "checkIdentifier") {
-    const { identifier, pageURL, timestamp } = message;
-    repo.get(identifier).then((record) => {
-      const isNew = !record;
-      repo.addOrUpdate(identifier, pageURL, timestamp).then(() => {
-        if (isNew) {
-          sendResponse({ totalOccurrences: 1, firstSeenAt: timestamp });
-        } else {
-          const total = record.occurrences.length + 1;
-          sendResponse({
-            totalOccurrences: total,
-            firstSeenAt: record.firstSeenAt,
-            previousPages: record.occurrences,
-          });
-        }
-      });
-    });
-    return true; // Indicates that sendResponse will be called asynchronously
-  } else if (message.action === "getAllIdentifiers") {
-    repo.getAll().then((all) => {
-      sendResponse(all);
-    });
+async function getCount() {
+  const record = await db.counters.get("loginCount");
+  return record ? record.value : 0;
+}
+
+async function setCount(val) {
+  await db.counters.put({ key: "loginCount", value: val });
+}
+
+chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+  if (msg.action === "getCount") {
+    getCount().then((count) => sendResponse({ count }));
     return true;
-  } else if (message.action === "clearAllIdentifiers") {
-    repo.clearAll().then(() => {
-      sendResponse({ success: true });
-      chrome.runtime.sendMessage({ action: "identifiersUpdated" });
+  } else if (msg.action === "increment") {
+    getCount().then((count) => {
+      const next = count + 1;
+      setCount(next).then(() => sendResponse({ count: next }));
     });
     return true;
   }
