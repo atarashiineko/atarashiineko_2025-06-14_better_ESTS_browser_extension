@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Identifier Tracker Options</title>
+    <link rel="stylesheet" href="options.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            width: 400px;
+        }
+
+        .header {
+            background: #f5f5f5;
+            padding: 10px;
+            font-weight: bold;
+        }
+
+        .pattern-list {
+            margin: 10px;
+        }
+
+        .pattern-item {
+            border-bottom: 1px solid #eee;
+            padding: 8px 0;
+        }
+
+        .pattern-actions {
+            margin-left: 10px;
+        }
+
+        .add-form {
+            margin: 10px;
+        }
+
+        .add-form input {
+            margin-right: 8px;
+        }
+
+        .error {
+            color: #d32f2f;
+            font-size: 0.95em;
+        }
+
+        .save-btn,
+        .delete-btn {
+            padding: 2px 8px;
+            border-radius: 2px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .save-btn {
+            background: #388e3c;
+            color: #fff;
+        }
+
+        .delete-btn {
+            background: #e53935;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">Identifier Tracker – Regex Patterns</div>
+    <form id="add-form" class="add-form">
+        <input type="text" id="pattern-name" placeholder="Pattern Name" required />
+        <input type="text" id="pattern-regex" placeholder="Regex (e.g. \\b\\d{3}-\\d{3}-\\d{4}\\b)" required />
+        <button type="submit" class="save-btn">Add</button>
+        <span id="add-error" class="error"></span>
+    </form>
+    <div id="pattern-list" class="pattern-list"></div>
+    <script type="module" src="options.js"></script>
+</body>
+
+</html>

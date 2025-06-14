@@ -1,0 +1,17 @@
+.identifier-match {
+  padding: 2px 4px;
+  border-radius: 3px;
+  background: #fffbe7;
+  transition: border 0.2s, background 0.2s;
+}
+
+.highlight-new {
+  border: 2px solid green;
+  background: #eaffea;
+}
+
+.highlight-seen {
+  border: 2px solid orange;
+  background: #fff3e0;
+  cursor: pointer;
+}
