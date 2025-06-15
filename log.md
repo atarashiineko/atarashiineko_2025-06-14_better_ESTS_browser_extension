@@ -1,3 +1,22 @@
+## 2025-06-15T07:13:40Z — Remove hostnames lookup
+
+**Task Overview**:
+Eliminate attempted fetch of `.well-known/hostnames` in the content script.
+
+**Context**:
+The code tried resolving a tenant domain by hitting a hostnames endpoint which does not exist.
+
+**Thought Process**:
+Since hostnames cannot be obtained using only the tenant ID, the call and associated logic were unnecessary.
+
+**Chosen Solution**:
+Deleted the fetch block and left domain blank when the URL segment is a GUID.
+
+**Implementation**:
+- Edited `src/content-script.js` to remove the hostnames request.
+
+**Impact Summary**:
+Simplifies tenant info logic and avoids a failing network call.
 ## 2025-06-15T06:38:07Z — Track daily logins
 
 **Task Overview**:
