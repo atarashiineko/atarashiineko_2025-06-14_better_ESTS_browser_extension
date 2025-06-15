@@ -1,3 +1,25 @@
+## 2025-06-15T06:38:07Z — Track daily logins
+
+**Task Overview**:
+Add a per-day login counter stored in IndexedDB and display it in both the in-page UI and popup.
+
+**Context**:
+The extension only tracked total login counts.
+
+**Thought Process**:
+Used local date to create keys for daily counts. Needed to update background, content script and popup to fetch and display both totals. Ensured style remained simple.
+
+**Chosen Solution**:
+Added helper functions in background.js to manage daily records. Introduced new getCounts message returning both totals. Updated content and popup scripts to show Logins today line.
+
+**Implementation**:
+- Updated `src/background.js` with daily count functions and message handling.
+- Modified `src/content-script.js` to render two count lines and poll both values.
+- Adjusted `popup/popup.js` and `popup/popup.html` for the new daily display.
+- Documented the new behavior in `README.md`.
+
+**Impact Summary**:
+Users now see today's login count alongside the overall total, stored per local day for accuracy.
 ## 2025-06-15T06:00:17Z — Show tenant info
 
 **Task Overview**:
