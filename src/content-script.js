@@ -1,3 +1,7 @@
+import { WindowManager } from './window.js';
+import { AppWindow } from './app-window.js';
+import './window.css';
+
 function incrementCount() {
   return new Promise((resolve) => {
     chrome.runtime.sendMessage({ action: "increment" }, (resp) => {
@@ -22,6 +26,19 @@ function injectCounter(count) {
     document.body.appendChild(counter);
   }
   counter.textContent = `Logins: ${count}`;
+
+  let btn = document.getElementById('app-launch-btn');
+  if (!btn) {
+    btn = document.createElement('button');
+    btn.id = 'app-launch-btn';
+    btn.className = 'app-button';
+    btn.textContent = '\uD83D\uDD5F';
+    counter.appendChild(btn);
+    btn.addEventListener('click', () => {
+      const win = new AppWindow({ title: 'My App', width: 500, height: 400 });
+      WindowManager.open(win);
+    });
+  }
 }
 
 (async () => {
