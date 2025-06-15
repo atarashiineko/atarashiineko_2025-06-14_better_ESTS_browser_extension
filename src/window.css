@@ -1,0 +1,56 @@
+.app-button {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  background: #fff;
+  border: 1px solid #ccc;
+  margin-left: 4px;
+}
+.app-button:hover,
+.app-button:focus {
+  outline: 2px solid #888;
+}
+
+.custom-window {
+  position: fixed;
+  background: #fff;
+  border: 1px solid #666;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  overflow: hidden;
+}
+.window-header {
+  background: #eee;
+  padding: 4px;
+  cursor: move;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}
+.window-title {
+  font-weight: bold;
+}
+.window-close-btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+.window-content {
+  padding: 8px;
+  overflow: auto;
+  height: calc(100% - 32px);
+}
+.window-resizer {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  right: 0;
+  bottom: 0;
+  cursor: nwse-resize;
+}
