@@ -1,3 +1,25 @@
+## 2025-06-15T05:38:30Z — Refresh login count
+
+**Task Overview**:
+Add periodic polling to keep login counter accurate across open tabs.
+
+**Context**:
+The login tracker only updated on page load. Opening new tabs changed the count without updating already loaded pages.
+
+**Thought Process**:
+Needed to update each page regularly without new dependencies. Polling via chrome.runtime.sendMessage suits.
+
+**Chosen Solution**:
+Use setInterval to request the current count every second from the background script and update the counter DOM.
+
+**Implementation**:
+- Added getCount function in src/content-script.js.
+- Updated injectCounter to use a span for the count.
+- Started a one second interval that fetches and injects updated counts.
+
+**Impact Summary**:
+Counters now stay in sync across tabs, showing accurate totals.
+
 ## 2025-06-15T01:11:42Z — Namespace window styles
 
 **Task Overview**:

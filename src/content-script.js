@@ -11,6 +11,14 @@ function incrementCount() {
   });
 }
 
+function getCount() {
+  return new Promise((resolve) => {
+    chrome.runtime.sendMessage({ action: "getCount" }, (resp) => {
+      resolve(resp ? resp.count : 0);
+    });
+  });
+}
+
 function injectCounter(count) {
   let counter = document.getElementById(pf("login-count-tracker"));
   if (!counter) {
@@ -28,7 +36,13 @@ function injectCounter(count) {
     counter.style.fontSize = "14px";
     document.body.appendChild(counter);
   }
-  counter.textContent = `Logins: ${count}`;
+  let countSpan = document.getElementById(pf("login-count"));
+  if (!countSpan) {
+    countSpan = document.createElement("span");
+    countSpan.id = pf("login-count");
+    counter.appendChild(countSpan);
+  }
+  countSpan.textContent = `Logins: ${count}`;
 
   let btn = document.getElementById(pf('app-launch-btn'));
   if (!btn) {
@@ -48,4 +62,8 @@ function injectCounter(count) {
 (async () => {
   const count = await incrementCount();
   injectCounter(count);
+  setInterval(async () => {
+    const latest = await getCount();
+    injectCounter(latest);
+  }, 1000);
 })();
