@@ -1,3 +1,25 @@
+## 2025-06-15T06:00:17Z — Show tenant info
+
+**Task Overview**:
+Display the current tenant and referrer on the login page.
+
+**Context**:
+The extension only tracked login counts. The request asked to expose tenant and referrer information on the page.
+
+**Thought Process**:
+Needed to parse the tenant from the URL and fetch metadata using only standard Web APIs. Also had to handle missing data when the tenant ID could not be resolved to a domain.
+
+**Chosen Solution**:
+Fetch the tenant openid configuration to obtain logout URL and GUID. Attempt to read domain names from a hostnames endpoint if available.
+
+**Implementation**:
+- Added helper functions in `src/content-script.js` to resolve tenant info.
+- Injected a new UI element on the top left showing the tenant, logout link and referrer.
+- Updated build to ensure script compiles after changes.
+
+**Impact Summary**:
+Users now see which tenant they are signing into and the referring URL directly on the page.
+
 ## 2025-06-15T05:38:30Z — Refresh login count
 
 **Task Overview**:
