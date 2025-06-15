@@ -44,20 +44,28 @@ async function resolveTenantInfo() {
 function incrementCount() {
   return new Promise((resolve) => {
     chrome.runtime.sendMessage({ action: "increment" }, (resp) => {
-      resolve(resp ? resp.count : 0);
+      if (resp) {
+        resolve(resp);
+      } else {
+        resolve({ count: 0, daily: 0 });
+      }
     });
   });
 }
 
 function getCount() {
   return new Promise((resolve) => {
-    chrome.runtime.sendMessage({ action: "getCount" }, (resp) => {
-      resolve(resp ? resp.count : 0);
+    chrome.runtime.sendMessage({ action: "getCounts" }, (resp) => {
+      if (resp) {
+        resolve(resp);
+      } else {
+        resolve({ count: 0, daily: 0 });
+      }
     });
   });
 }
 
-function injectCounter(count) {
+function injectCounter(count, daily) {
   let counter = document.getElementById(pf("login-count-tracker"));
   if (!counter) {
     counter = document.createElement("div");
@@ -74,13 +82,28 @@ function injectCounter(count) {
     counter.style.fontSize = "14px";
     document.body.appendChild(counter);
   }
+  let box = document.getElementById(pf("count-box"));
+  if (!box) {
+    box = document.createElement("div");
+    box.id = pf("count-box");
+    box.style.display = "flex";
+    box.style.flexDirection = "column";
+    counter.appendChild(box);
+  }
   let countSpan = document.getElementById(pf("login-count"));
   if (!countSpan) {
     countSpan = document.createElement("span");
     countSpan.id = pf("login-count");
-    counter.appendChild(countSpan);
+    box.appendChild(countSpan);
+  }
+  let dailySpan = document.getElementById(pf("login-daily-count"));
+  if (!dailySpan) {
+    dailySpan = document.createElement("span");
+    dailySpan.id = pf("login-daily-count");
+    box.appendChild(dailySpan);
   }
   countSpan.textContent = `Logins: ${count}`;
+  dailySpan.textContent = `Logins today: ${daily}`;
 
   let btn = document.getElementById(pf('app-launch-btn'));
   if (!btn) {
@@ -138,12 +161,12 @@ function injectTenantInfo(info) {
 }
 
 (async () => {
-  const count = await incrementCount();
-  injectCounter(count);
+  const initial = await incrementCount();
+  injectCounter(initial.count, initial.daily);
   const info = await resolveTenantInfo();
   injectTenantInfo(info);
   setInterval(async () => {
     const latest = await getCount();
-    injectCounter(latest);
+    injectCounter(latest.count, latest.daily);
   }, 1000);
 })();

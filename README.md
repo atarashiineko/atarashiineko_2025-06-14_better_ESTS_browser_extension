@@ -9,12 +9,12 @@ This extension records how many times you visit `https://login.microsoftonline.c
 
 ## Dexie Setup
 
-`dexie.min.js` is bundled with the extension. A single IndexedDB store named `counters` holds a record with the key `"loginCount"`.
+`dexie.min.js` is bundled with the extension. A single IndexedDB store named `counters` holds a record with the key `"loginCount"`. Daily counts are stored in keys formatted as `loginCount_YYYY_MM_DD` using the local date.
 
-The background worker manages the value and exposes two actions via `chrome.runtime.sendMessage`:
+The background worker manages these values and exposes actions via `chrome.runtime.sendMessage`:
 
-- `increment` – increments the count and returns the updated value.
-- `getCount` – returns the current count.
+- `increment` – increments both totals and returns the updated numbers.
+- `getCounts` – returns the total and today's count.
 
 The content script increments the count each time the login page loads and injects a small UI element showing `Logins: <number>`.
 
