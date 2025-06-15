@@ -1,3 +1,5 @@
+import { pf } from './prefix.js';
+
 export class BaseWindow {
   constructor({
     title = '',
@@ -48,7 +50,7 @@ export class BaseWindow {
 
   render() {
     const container = document.createElement('div');
-    container.className = 'custom-window';
+    container.className = pf('custom-window');
     container.style.width = this.size.width + 'px';
     container.style.height = this.size.height + 'px';
     container.style.minWidth = this.minSize.width + 'px';
@@ -58,21 +60,21 @@ export class BaseWindow {
     container.style.zIndex = WindowManager.nextZIndex();
 
     const header = document.createElement('div');
-    header.className = 'window-header';
+    header.className = pf('window-header');
     const title = document.createElement('span');
-    title.className = 'window-title';
+    title.className = pf('window-title');
     title.textContent = this.title;
     const closeBtn = document.createElement('button');
-    closeBtn.className = 'window-close-btn';
+    closeBtn.className = pf('window-close-btn');
     closeBtn.textContent = '\u00D7';
     header.appendChild(title);
     header.appendChild(closeBtn);
 
     const content = document.createElement('div');
-    content.className = 'window-content';
+    content.className = pf('window-content');
 
     const resizer = document.createElement('div');
-    resizer.className = 'window-resizer';
+    resizer.className = pf('window-resizer');
 
     container.appendChild(header);
     container.appendChild(content);

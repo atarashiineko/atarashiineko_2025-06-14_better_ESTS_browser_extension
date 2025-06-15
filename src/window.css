@@ -1,4 +1,4 @@
-.app-button {
+.lct-app-button {
   width: 32px;
   height: 32px;
   display: inline-flex;
@@ -8,14 +8,14 @@
   font-size: 18px;
   background: #fff;
   border: 1px solid #ccc;
-  margin-left: 4px;
+  margin-left: 8px;
 }
-.app-button:hover,
-.app-button:focus {
+.lct-app-button:hover,
+.lct-app-button:focus {
   outline: 2px solid #888;
 }
 
-.custom-window {
+.lct-custom-window {
   position: fixed;
   background: #fff;
   border: 1px solid #666;
@@ -23,7 +23,7 @@
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
   overflow: hidden;
 }
-.window-header {
+.lct-window-header {
   background: #eee;
   padding: 4px;
   cursor: move;
@@ -32,21 +32,21 @@
   align-items: center;
   user-select: none;
 }
-.window-title {
+.lct-window-title {
   font-weight: bold;
 }
-.window-close-btn {
+.lct-window-close-btn {
   border: none;
   background: none;
   cursor: pointer;
   font-size: 16px;
 }
-.window-content {
+.lct-window-content {
   padding: 8px;
   overflow: auto;
   height: calc(100% - 32px);
 }
-.window-resizer {
+.lct-window-resizer {
   position: absolute;
   width: 16px;
   height: 16px;

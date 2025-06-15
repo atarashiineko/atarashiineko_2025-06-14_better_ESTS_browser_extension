@@ -1,3 +1,52 @@
+## 2025-06-15T01:11:42Z — Namespace window styles
+
+**Task Overview**:
+Prevent CSS collisions with the ESTS page by namespacing all classes and IDs for the application UI.
+
+**Context**:
+The previous implementation injected generic class names like `.app-button` and `.custom-window`. When loaded with ESTS pages, these could clash with existing styles and cause layout issues.
+
+**Thought Process**:
+A simple prefix ensures uniqueness without altering behaviors. Adding a helper function simplifies applying the prefix consistently across modules.
+
+**Chosen Solution**:
+Introduced a `pf` utility that prepends `lct-` to any identifier. Updated the scripts and stylesheet to use prefixed selectors.
+
+**Implementation**:
+- Created `src/prefix.js`.
+- Imported `pf` in `content-script.js` and `window.js` to assign prefixed IDs and classes.
+- Updated `window.css` selectors with the new prefix.
+
+**Impact Summary**:
+All UI elements now use unique identifiers, eliminating conflicts with host page styles. The window appears correctly with consistent spacing.
+## 2025-06-15T01:06:39Z — Fix window UI issues
+
+**Task Overview**:
+Resolve problems with the application window added previously: incorrect emoji,
+missing spacing, and invisible styling.
+
+**Context**:
+The first implementation built a window system but the button used the wrong
+icon and the window lacked CSS on load. Only the close button appeared.
+
+**Thought Process**:
+Analyzed the DOM structure and build output to discover CSS was not injected and
+layout styles were missing. Determined updates were required in the manifest and
+content script.
+
+**Chosen Solution**:
+Add `content-script.css` to the manifest so styles load. Adjust button display
+and emoji, and ensure the counter uses flex layout for spacing.
+
+**Implementation**:
+- Updated `manifest.json` to reference the stylesheet.
+- Modified `src/content-script.js` for layout fixes and correct emoji.
+- Tweaked `.app-button` margin in `src/window.css`.
+
+**Impact Summary**:
+Window now renders correctly with visible content and proper spacing, providing
+a usable UI foundation.
+
 ## 2025-06-14T23:46:36Z — Implement application window
 
 **Task Overview**:
