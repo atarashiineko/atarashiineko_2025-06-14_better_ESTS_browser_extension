@@ -28,15 +28,7 @@ async function resolveTenantInfo() {
     const m = auth.match(/login\.microsoftonline\.com\/([^/]+)/);
     if (m) tenantId = m[1];
     logoutUrl = cfg.end_session_endpoint || '';
-    if (looksLikeGuid(seg)) {
-      try {
-        const hostResp = await fetch(`https://login.microsoftonline.com/${seg}/.well-known/hostnames`);
-        if (hostResp.ok) {
-          const list = await hostResp.json();
-          if (Array.isArray(list) && list.length) domain = list[0];
-        }
-      } catch {}
-    }
+    // Domain cannot be resolved when the segment is a GUID
   }
   return { tenantId, domain, logoutUrl };
 }
